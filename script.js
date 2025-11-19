@@ -11,7 +11,7 @@ const snake= [
     
 ];
 
-const direction="DOWN";
+let direction="DOWN";
 
 for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -47,3 +47,12 @@ setInterval(() => {
     render();
 }, 400);
 
+
+addEventListener('keydown', (e) => {
+    console.log(e.key);
+    
+    if(e.key === "ArrowUp") direction = "UP";
+    else if(e.key === "ArrowDown" ) direction = "DOWN";
+    else if(e.key === "ArrowLeft" ) direction = "LEFT";
+    else if(e.key === "ArrowRight" ) direction = "RIGHT";
+});
