@@ -8,11 +8,10 @@ const blocks = [];
 
 const snake= [
     {x: 2, y: 2}, 
-    {x: 2, y: 3}, 
-    {x: 2, y: 4}
+    
 ];
 
-
+const direction="DOWN";
 
 for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -30,4 +29,21 @@ function render() {
         blocks[`${segment.x},${segment.y}`].classList.add('filled');
     });
 }
-render();
+
+setInterval(() => {
+    let head = {...snake[0]};
+    if(direction === "RIGHT") head.y += 1;
+    else if(direction === "LEFT") head.y -= 1;
+    else if(direction === "UP") head.x -= 1;
+    else if(direction === "DOWN") head.x += 1;
+
+    snake.forEach(segment => {
+        blocks[`${segment.x},${segment.y}`].classList.remove('filled');
+    });
+    snake.unshift(head);
+    snake.pop();
+    
+    
+    render();
+}, 400);
+
