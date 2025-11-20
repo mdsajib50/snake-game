@@ -42,6 +42,20 @@ html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.btn{
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background-color: #2980b9;
+    color: var(--text-primary-color);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.btn:hover{
+    background-color: #3498db;
+}
+
 section{
     padding: var(--spacing-2xl);
     display: flex;
@@ -88,7 +102,26 @@ section .infos{
  .filled{
     background-color: var(--bg-fill-color);
  }
- 
+
 .food{
         background-color: var(--bg-food-color);
-    }
+}
+
+.modal{
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(39, 39, 39, 0.404);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal .start-game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
