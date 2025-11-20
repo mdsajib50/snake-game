@@ -4,6 +4,9 @@ const blockHeight = 50;
 const rows = Math.floor(board.clientHeight / blockHeight);
 const cols = Math.floor(board.clientWidth / blockWidth);
 
+// let intervalId=null;
+let food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
+
 const blocks = [];
 
 const snake= [
@@ -43,10 +46,17 @@ setInterval(() => {
     snake.unshift(head);
     snake.pop();
     
+    if(head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
+        alert("Game Over");
+        
+    }
+    
+    blocks[`${food.x},${food.y}`].classList.add('food');
     
     render();
 }, 400);
 
+console.log(snake);
 
 addEventListener('keydown', (e) => {
     console.log(e.key);
