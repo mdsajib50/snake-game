@@ -53,6 +53,11 @@ setInterval(() => {
     
     blocks[`${food.x},${food.y}`].classList.add('food');
     
+    if(head.x === food.x && head.y === food.y) {
+        snake.push({...snake[snake.length - 1]});
+        blocks[`${food.x},${food.y}`].classList.remove('food');
+        food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
+    }
     render();
 }, 400);
 
