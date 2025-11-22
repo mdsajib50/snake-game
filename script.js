@@ -1,10 +1,14 @@
 const board = document.querySelector('.board');
+const startButton = document.querySelector('.start-btn');
+const modal = document.querySelector('.modal');
+
+
 const blockWidth = 50;
 const blockHeight = 50;
 const rows = Math.floor(board.clientHeight / blockHeight);
 const cols = Math.floor(board.clientWidth / blockWidth);
 
-// let intervalId=null;
+let intervalId=null;
 let food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
 
 const blocks = [];
@@ -28,40 +32,59 @@ for (let row = 0; row < rows; row++) {
 }
 
 function render() {
+
     snake.forEach(segment => {
         blocks[`${segment.x},${segment.y}`].classList.add('filled');
     });
-}
 
-setInterval(() => {
-    let head = {...snake[0]};
+      let head = {...snake[0]};
+        
     if(direction === "RIGHT") head.y += 1;
     else if(direction === "LEFT") head.y -= 1;
     else if(direction === "UP") head.x -= 1;
     else if(direction === "DOWN") head.x += 1;
+    
 
-    snake.forEach(segment => {
-        blocks[`${segment.x},${segment.y}`].classList.remove('filled');
-    });
     snake.unshift(head);
-    snake.pop();
+
+    if(snake.length > 2){
+        const tail = snake[snake.length -1];
+        console.log(tail);
+        
+        blocks[`${tail.x},${tail.y}`].classList.remove('filled');
+        snake.pop();
+    }
     
     if(head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
+        intervalId && clearInterval(intervalId);
         alert("Game Over");
         
     }
     
     blocks[`${food.x},${food.y}`].classList.add('food');
-    
+
     if(head.x === food.x && head.y === food.y) {
         snake.push({...snake[snake.length - 1]});
         blocks[`${food.x},${food.y}`].classList.remove('food');
         food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
     }
+    console.log(snake);
+    
+    console.log(snake.length);
+}
+console.log(`snake before inter:${snake}`);
+console.log(`snake before inter:${snake.length}`);
+
+startButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+   setInterval(() => {
     render();
 }, 400);
 
-console.log(snake);
+});
+
+console.log(`snake after inter: ${snake}`);
+
 
 addEventListener('keydown', (e) => {
     console.log(e.key);
