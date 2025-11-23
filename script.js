@@ -6,9 +6,19 @@ const restartButton = document.querySelector('.restart-btn');
 const startModal = document.querySelector('.start-game');
 const gameOverModal = document.querySelector('.game-over');
 
+const highScoreElement=document.getElementById('high-score');
+const scoreElement=document.getElementById('score');
+const timeElement=document.getElementById('time');
+    
+let score=0;
+let highScore=localStorage.getItem('highScore') || 0;
+let time='00-00';
+
+highScoreElement.innerText=highScore;
 
 const blockWidth = 50;
 const blockHeight = 50;
+
 const rows = Math.floor(board.clientHeight / blockHeight);
 const cols = Math.floor(board.clientWidth / blockWidth);
 
@@ -74,6 +84,14 @@ function render() {
     if(head.x === food.x && head.y === food.y) {
         snake.push({...snake[snake.length - 1]});
         blocks[`${food.x},${food.y}`].classList.remove('food');
+        score+=10;
+        scoreElement.innerText=score;
+        if(score>highScore){
+            highScore=score;
+            localStorage.setItem('highScore', highScore);
+
+        };
+
         food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
     }
     console.log(snake);
@@ -100,6 +118,13 @@ restartButton.addEventListener('click', () => {
 function restartGame() {
     modal.style.display = 'none';
     // gameOverModal.style.display = 'none';
+    score=0;
+    scoreElement.innerText=score;
+    time='00-00';
+    timeElement.innerText=time;
+    highScoreElement.innerText=highScore;
+
+    // clearInterval(intervalId);
 
     blocks[`${food.x},${food.y}`].classList.remove('food');
     
