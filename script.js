@@ -22,6 +22,7 @@ const blockHeight = 50;
 const rows = Math.floor(board.clientHeight / blockHeight);
 const cols = Math.floor(board.clientWidth / blockWidth);
 
+let timerIntervalId=null;
 let intervalId=null;
 let food = {x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols)};
 
@@ -39,7 +40,6 @@ for (let row = 0; row < rows; row++) {
         const block = document.createElement('div');
         block.classList.add('block');
         board.appendChild(block);
-        block.innerText = `${row},${col}`;
         blocks[`${row},${col}`] = block;
     }
     
@@ -106,6 +106,16 @@ startButton.addEventListener('click', () => {
    intervalId=setInterval(() => {
     render();
 }, 400);
+
+    timerIntervalId = setInterval(() => {
+        const[minutes, seconds] = time.split('-').map(Number);
+        let totalSeconds = minutes * 60 + seconds + 1;
+        const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const secs = String(totalSeconds % 60).padStart(2, '0');
+        
+        time = `${mins}-${secs}`;
+        timeElement.innerText = time;
+    }, 1000);
 
 });
 
